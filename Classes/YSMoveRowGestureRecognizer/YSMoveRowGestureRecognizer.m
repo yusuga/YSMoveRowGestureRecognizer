@@ -10,30 +10,40 @@
 
 @interface YSMoveRowGestureRecognizer ()
 
-@property (weak, nonatomic, readwrite) UITableView *tableView;
-
-@property (nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
+@property (nonatomic, readwrite) UILongPressGestureRecognizer *gesture;
 
 @end
 
 @implementation YSMoveRowGestureRecognizer
 
-- (instancetype)initWithTableView:(UITableView *)tableView
+- (instancetype)init
 {
-    NSParameterAssert(tableView);
-    
     if (self = [super init]) {
-        self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didLongPress:)];
-        [tableView addGestureRecognizer:self.longPressGestureRecognizer];
-        
-        self.tableView = tableView;
+        self.gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didLongPress:)];
     }
     return self;
 }
 
+- (instancetype)initWithTableView:(UITableView *)tableView
+       addGestureRecognizerToView:(UIView *)view
+{
+    NSParameterAssert(tableView);
+    
+    if (self = [self init]) {
+        [self setTableView:tableView];
+        [self addGestureRecognizerToView:view];
+    }
+    return self;
+}
+
+- (void)addGestureRecognizerToView:(UIView *)view
+{
+    [view addGestureRecognizer:self.gesture];
+}
+
 - (void)setDisabled:(BOOL)disabled
 {
-    self.longPressGestureRecognizer.enabled = !disabled;
+    self.gesture.enabled = !disabled;
 }
 
 #pragma mark - Gesture

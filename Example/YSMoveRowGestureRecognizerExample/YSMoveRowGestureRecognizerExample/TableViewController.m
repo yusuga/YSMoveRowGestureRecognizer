@@ -31,7 +31,8 @@
         [self.data addObject:secData];
     }
     
-    self.moveRowGestureRecognizer = [[YSMoveRowGestureRecognizer alloc] initWithTableView:self.tableView];
+    self.moveRowGestureRecognizer = [[YSMoveRowGestureRecognizer alloc] initWithTableView:self.tableView
+                                                               addGestureRecognizerToView:self.tableView];
 }
 
 #pragma mark - Table view data source

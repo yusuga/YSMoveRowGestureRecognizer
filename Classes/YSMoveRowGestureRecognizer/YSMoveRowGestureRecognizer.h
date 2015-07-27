@@ -10,8 +10,12 @@
 
 @interface YSMoveRowGestureRecognizer : NSObject
 
-- (instancetype)initWithTableView:(UITableView *)tableView;
-@property (weak, nonatomic, readonly) UITableView *tableView;
+- (instancetype)initWithTableView:(UITableView *)tableView
+       addGestureRecognizerToView:(UIView *)view;
+
+@property (weak, nonatomic) UITableView *tableView;
+@property (nonatomic, readonly) UILongPressGestureRecognizer *gesture;
+- (void)addGestureRecognizerToView:(UIView *)view;
 
 - (void)setDisabled:(BOOL)disabled;
 
