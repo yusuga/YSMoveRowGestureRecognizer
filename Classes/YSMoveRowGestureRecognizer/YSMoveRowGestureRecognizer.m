@@ -70,7 +70,7 @@
                 UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
                 
                 // Take a snapshot of the selected row using helper method.
-                __snapshot = [self customSnapshoFromView:cell];
+                __snapshot = [self snapshotFromView:cell];
                 
                 // Add the snapshot as subview, centered at cell's center...
                 __block CGPoint center = cell.center;
@@ -142,16 +142,14 @@
     }
 }
 
-/** @brief Returns a customized snapshot of a given view. */
-- (UIView *)customSnapshoFromView:(UIView *)inputView {
-    
-    // Make an image from the input view.
-    UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, NO, 0.);
-    [inputView.layer renderInContext:UIGraphicsGetCurrentContext()];
+- (UIView *)snapshotFromView:(UIView *)inputView
+{
+    /* https://developer.apple.com/library/ios/qa/qa1817/_index.html */
+    UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, YES, 0);
+    [inputView drawViewHierarchyInRect:inputView.bounds afterScreenUpdates:YES];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    // Create an image view.
     UIView *snapshot = [[UIImageView alloc] initWithImage:image];
     snapshot.layer.masksToBounds = NO;
     snapshot.layer.cornerRadius = 0.;
