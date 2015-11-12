@@ -145,6 +145,8 @@
                 __sourceIndexPath = nil;
                 [__snapshot removeFromSuperview];
                 __snapshot = nil;
+                
+                cell.hidden = NO;
             }];
             
             break;
